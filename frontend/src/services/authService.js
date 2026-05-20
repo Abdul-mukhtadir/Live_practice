@@ -7,8 +7,9 @@
 import axios from 'axios';
 
 // Base URL — React's package.json "proxy" handles forwarding to backend
-const BASE_URL = '/api/auth';
-
+const BASE_URL = process.env.REACT_APP_API_URL
+  ? `${process.env.REACT_APP_API_URL}/api/auth`
+  : '/api/auth';
 /**
  * Register a new user account.
  * @param {{ name: string, email: string, password: string }} data
