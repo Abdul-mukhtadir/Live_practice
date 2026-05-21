@@ -18,12 +18,13 @@ const app = express();
 app.use(express.json());
 
 // Enable CORS for React frontend
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://mailreco.netlify.app/'
+  ],
+  credentials: true
+}));
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
 
