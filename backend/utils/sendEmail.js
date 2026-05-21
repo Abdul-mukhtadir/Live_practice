@@ -1,10 +1,18 @@
-const { Resend } = require('resend');
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const nodemailer = require('nodemailer');
 
 const sendResetEmail = async (toEmail, resetLink, userName) => {
-  const { data, error } = await resend.emails.send({
-    from: 'SecureApp <onboarding@resend.dev>',
+  const transporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  await transporter.sendMail({
+    from: `"SecureApp Support" <${process.env.EMAIL_USER}>`,
     to: toEmail,
     subject: 'Password Reset Request - SecureApp',
     html: `<p>Hello ${userName},</p>
@@ -13,9 +21,7 @@ const sendResetEmail = async (toEmail, resetLink, userName) => {
            <p>This link expires in 60 minutes.</p>`
   });
 
-  if (error) throw new Error(error.message);
-  console.log('Reset email sent:', data);
-  return data;
+  console.log('Reset email sent to:', toEmail);
 };
 
 module.exports = { sendResetEmail };
