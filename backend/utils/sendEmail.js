@@ -15,12 +15,15 @@ const sendResetEmail = async (toEmail, resetLink, userName) => {
   // Create Nodemailer transporter using SMTP settings from .env
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
-    port: parseInt(process.env.EMAIL_PORT, 10),
-    secure: false, // true for port 465, false for 587
+    port: 587,
+    secure: false,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
+    tls: {
+      rejectUnauthorized: false
+    }
   });
 
   // Calculate expiry time for display in email (default 1 hour)
