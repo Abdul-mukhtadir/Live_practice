@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://mailreco.netlify.app/'
+    'https://mailreco.netlify.app'
   ],
   credentials: true
 }));
